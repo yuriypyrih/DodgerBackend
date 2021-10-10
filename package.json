@@ -1,0 +1,22 @@
+{
+  "name": "dodgerbackend",
+  "version": "1.0.0",
+  "description": "Backend for DodgerReactApp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuriypyrih/DodgerBackend.git"
+  },
+  "author": "Yuriy Pyrih",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yuriypyrih/DodgerBackend/issues"
+  },
+  "homepage": "https://github.com/yuriypyrih/DodgerBackend#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
