@@ -68,7 +68,6 @@ app.use(
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   res.header("Access-Control-Allow-Origin", "*");
-  console.log("Request just arrived", new Date());
   next();
 });
 

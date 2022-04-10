@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const { RELICS } = require("../data/RELICS");
+const { LEVELS } = require("../data/LEVELS");
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -12,7 +13,7 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, "Please provide your email"],
-    unique: true,
+    unique: [true, "There is already an account with this email"],
     lowercase: true,
     validate: [validator.isEmail, "Please provide a valid email"],
   },
@@ -26,7 +27,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, "Please provide a password"],
-    minlength: 8,
+    minlength: [6, "Password must be at least 6 letters long"],
     select: false,
   },
   passwordConfirm: {
@@ -55,7 +56,7 @@ const userSchema = new mongoose.Schema({
   },
   unlockedLevels: {
     type: [String],
-    default: [],
+    default: [LEVELS.LVL_1],
     select: true,
   },
   unlockedRelics: {

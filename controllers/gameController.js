@@ -6,7 +6,7 @@ const { RELICS } = require("../data/RELICS");
 
 exports.unlockLevel = catchAsync(async (req, res, next) => {
   //1) Fetch all params
-  const { unlockLevel, unconditional } = req.body;
+  const { unlockLevel, cost } = req.body;
   if (!unlockLevel) {
     return next(new AppError("You have to provide which level to unlock", 500));
   }
@@ -28,6 +28,14 @@ exports.unlockLevel = catchAsync(async (req, res, next) => {
 
   foundUser.unlockedLevels = [...foundUser.unlockedLevels, String(unlockLevel)];
 
+  // Update his stars
+  if (cost) {
+    if (foundUser.stars < cost) {
+      return next(new AppError("You don't have enough stars", 500));
+    }
+    foundUser.stars -= cost;
+  }
+
   // 3) Update user document
   const updatedUser = await User.findByIdAndUpdate(req.user.id, foundUser, {
     new: true,
@@ -36,9 +44,7 @@ exports.unlockLevel = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    data: {
-      user: updatedUser,
-    },
+    document: updatedUser,
   });
 });
 
@@ -86,9 +92,7 @@ exports.beatLevel = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    data: {
-      user: updatedUser,
-    },
+    document: updatedUser,
   });
 });
 
